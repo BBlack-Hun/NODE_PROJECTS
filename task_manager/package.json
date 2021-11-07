@@ -1,0 +1,12 @@
+{
+  "name": "task_manager",
+  "version": "1.0.0",
+  "main": "server.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "description": "In order to run the porject, setup .env and set MONGO_URL variable equal to DB connection String.",
+  "keywords": [],
+  "author": ""
+}
