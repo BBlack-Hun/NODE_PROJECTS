@@ -1,4 +1,4 @@
-const app = requrie('./app.js');
+const app = require('./app.js');
 
 PORT = process.env.PORT;
 

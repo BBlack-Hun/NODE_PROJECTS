@@ -4,9 +4,15 @@
   "main": "server.js",
   "license": "MIT",
   "scripts": {
-    "start": "node server.js"
+    "start": "nodemon server.js"
   },
   "description": "In order to run the porject, setup .env and set MONGO_URL variable equal to DB connection String.",
   "keywords": [],
-  "author": ""
+  "author": "",
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "mongoose": "^6.0.12",
+    "nodemon": "^2.0.14"
+  }
 }
