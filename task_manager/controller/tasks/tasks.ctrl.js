@@ -3,7 +3,7 @@ exports.get_tasks = async (req, res) => {
 };
 
 exports.post_task = async (req, res) => {
-  res.send('create task');
+  res.json(req.body);
 };
 
 exports.get_task = async (req, res) => {
