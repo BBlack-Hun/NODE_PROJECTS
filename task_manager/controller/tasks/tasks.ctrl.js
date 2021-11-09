@@ -5,8 +5,12 @@ exports.get_tasks = async (req, res) => {
 };
 
 exports.post_task = async (req, res) => {
-  const task = await Task.create(req.body);
-  res.status(201).json({ task });
+  try {
+    const task = await Task.create(req.body);
+    res.status(201).json({ task });
+  } catch (error) {
+    res.status(500).json({ msg: error });
+  }
 };
 
 exports.get_task = async (req, res) => {
