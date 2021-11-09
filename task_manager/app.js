@@ -1,5 +1,6 @@
 const express = require('express');
 const dotenv = require('dotenv');
+const logger = require('morgan');
 const mongoose = require('mongoose');
 
 class App {
@@ -9,6 +10,8 @@ class App {
     dotenv.config();
 
     this.dbConnection();
+
+    this.setMiddleWare();
 
     this.getRouting();
   }
@@ -28,6 +31,12 @@ class App {
         console.error('Unable to connect to the database' + err);
         process.exit(1);
       });
+  }
+
+  setMiddleWare() {
+    // 미들웨어 세팅
+    this.app.use(express.json());
+    this.app.use(logger('tiny'));
   }
 
   getRouting() {
