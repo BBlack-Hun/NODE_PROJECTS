@@ -13,7 +13,22 @@ class App {
     this.getRouting();
   }
 
-  dbConnection() {}
+  dbConnection() {
+    mongoose
+      .connect(process.env.MONGO_URL)
+      .then(() => {
+        console.log(
+          'Connection has been established successfully. host : ' +
+            mongoose.connection.host,
+        );
+      })
+      // DB 연결시 바로 Admin을 만들 수 있다.
+      .then()
+      .catch((err) => {
+        console.error('Unable to connect to the database' + err);
+        process.exit(1);
+      });
+  }
 
   getRouting() {
     this.app.use('/', require('./controller'));
