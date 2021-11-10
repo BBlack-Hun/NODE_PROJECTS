@@ -37,5 +37,15 @@ exports.patch_task = async (req, res) => {
 };
 
 exports.delete_task = async (req, res) => {
+  try {
+    const { id: taskID } = req.params;
+    const task = await Task.findOneAndDelete({ _id: taskID });
+    if (!task) {
+      return res.status(404).json({ msg: `No task with id : ${taskID}` });
+    }
+    res.status(200).json({ task });
+  } catch (e) {
+    res.status(500).json({ msg: error });
+  }
   res.send('delete task');
 };
