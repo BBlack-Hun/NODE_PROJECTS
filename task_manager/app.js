@@ -14,6 +14,9 @@ class App {
     this.setMiddleWare();
 
     this.getRouting();
+
+    // 정적 위치
+    this.setStatic();
   }
 
   dbConnection() {
@@ -40,7 +43,11 @@ class App {
   }
 
   getRouting() {
-    this.app.use('/', require('./controller'));
+    this.app.use('/api', require('./controller'));
+  }
+
+  setStatic() {
+    this.app.use(express.static('./public'));
   }
 }
 

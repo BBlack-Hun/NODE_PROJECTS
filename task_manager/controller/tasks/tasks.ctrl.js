@@ -35,8 +35,11 @@ exports.get_task = async (req, res) => {
 exports.patch_task = async (req, res) => {
   try {
     const { id: taskID } = req.params;
-
-    const task = await Task.findOneAndUpdate({ _id: taskID }, req.body);
+    console.log(req.body);
+    const task = await Task.findOneAndUpdate({ _id: taskID }, req.body, {
+      new: true,
+      runValidators: true,
+    });
 
     if (!task) {
       return res.status(404).json({ msg: `no task with id : ${taskID}` });
