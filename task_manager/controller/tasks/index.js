@@ -17,4 +17,7 @@ router.patch('/:id', ctrl.patch_task);
 // delete task
 router.delete('/:id', ctrl.delete_task);
 
+// edit task
+// router.put('/:id', ctrl.put_task);
+
 module.exports = router;

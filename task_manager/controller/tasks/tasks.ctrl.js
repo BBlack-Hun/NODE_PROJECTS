@@ -64,5 +64,25 @@ exports.delete_task = async (req, res) => {
   } catch (e) {
     res.status(500).json({ msg: error });
   }
-  res.send('delete task');
+  // res.send('delete task');
 };
+
+// exports.put_task = async (req, res) => {
+//   try {
+//     const { id: taskID } = req.params;
+//     console.log(req.body);
+//     const task = await Task.findOneAndUpdate({ _id: taskID }, req.body, {
+//       new: true,
+//       runValidators: true,
+//       overwrite: true,
+//     });
+
+//     if (!task) {
+//       return res.status(404).json({ msg: `no task with id : ${taskID}` });
+//     }
+
+//     res.status(200).json({ task });
+//   } catch (e) {
+//     res.status(500).json({ msg: e });
+//   }
+// };
