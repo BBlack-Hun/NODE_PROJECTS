@@ -2,6 +2,7 @@ const express = require('express');
 const dotenv = require('dotenv');
 const logger = require('morgan');
 const mongoose = require('mongoose');
+const { CustomAPIError } = require('./error/coustom-error');
 
 class App {
   constructor() {
@@ -62,8 +63,10 @@ class App {
 
   errorHandler() {
     this.app.use((err, req, res, _) => {
-      console.log(err);
-      res.status(err.status).json({ msg: err.message });
+      if (err instanceof CustomAPIError) {
+        return res.status(err.ststusCode).json({ msg: err.message });
+      }
+      res.status(500).json({ msg: `Somthing went wrong, please try again` });
     });
   }
 }
