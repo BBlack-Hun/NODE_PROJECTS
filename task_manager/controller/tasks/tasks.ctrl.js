@@ -22,12 +22,15 @@ exports.post_task = asyncWrapper(async (req, res) => {
   // }
 });
 
-exports.get_task = asyncWrapper(async (req, res) => {
+exports.get_task = asyncWrapper(async (req, res, next) => {
   // try {
   const { id: taskID } = req.params;
   const task = await Task.findOne({ _id: taskID });
   if (!task) {
-    return res.status(404).json({ msg: `no task with id : ${taskID}` });
+    const error = new Error('Not Found');
+    error.status = 404;
+    return next(error);
+    // return res.status(404).json({ msg: `no task with id : ${taskID}` });
   }
 
   res.status(200).json({ task });

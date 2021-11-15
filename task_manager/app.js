@@ -62,7 +62,8 @@ class App {
 
   errorHandler() {
     this.app.use((err, req, res, _) => {
-      res.status(500).send({ msg: err });
+      console.log(err);
+      res.status(err.status).json({ msg: err.message });
     });
   }
 }
