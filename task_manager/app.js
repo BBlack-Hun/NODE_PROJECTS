@@ -17,6 +17,10 @@ class App {
 
     // 정적 위치
     this.setStatic();
+
+    this.status404();
+
+    this.errorHandler();
   }
 
   dbConnection() {
@@ -48,6 +52,18 @@ class App {
 
   setStatic() {
     this.app.use(express.static('./public'));
+  }
+
+  status404() {
+    this.app.use((req, res, _) => {
+      res.status(404).send('Route does not exist!');
+    });
+  }
+
+  errorHandler() {
+    // this.app.use((err, req, res, _) => {
+    //   res.status(500).send(err);
+    // });
   }
 }
 
