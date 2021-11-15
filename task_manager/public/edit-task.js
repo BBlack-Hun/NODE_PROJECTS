@@ -44,11 +44,10 @@ editFormDOM.addEventListener('submit', async (e) => {
     });
 
     const { _id: taskID, completed, name } = task;
-    console.log(completed);
     taskIDDOM.textContent = taskID;
     taskNameDOM.value = name;
     tempName = name;
-    if (completed) {
+    if (completed === true) {
       taskCompletedDOM.checked = true;
     }
     formAlertDOM.style.display = 'block';
