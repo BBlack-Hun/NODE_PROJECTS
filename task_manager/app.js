@@ -8,19 +8,25 @@ class App {
   constructor() {
     this.app = express();
 
+    // 환경변수 설정
     dotenv.config();
 
+    // db 컨넥션
     this.dbConnection();
 
+    // 미들웨어 셋팅
     this.setMiddleWare();
 
+    // 라우팅
     this.getRouting();
 
     // 정적 위치
     this.setStatic();
 
+    // 404 에러 handler
     this.status404();
 
+    // 500 에러 handler
     this.errorHandler();
   }
 
