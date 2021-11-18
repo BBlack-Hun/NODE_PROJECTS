@@ -3,6 +3,7 @@ const dotenv = require('dotenv');
 const logger = require('morgan');
 const mongoose = require('mongoose');
 const { CustomAPIError } = require('./error/coustom-error');
+const async_errors = require('express-async-errors');
 
 class App {
   constructor() {
@@ -10,6 +11,8 @@ class App {
     this.app = express();
     // dotenv
     dotenv.config();
+    //error
+    async_errors;
     // db connections
     this.dbConnection();
     // 미들웨어
@@ -49,7 +52,9 @@ class App {
 
   setStatic() {
     this.app.get('/', (req, res, _) => {
-      res.send('<h1>Store API</h1><a href="/api/v1/products">Products</a>');
+      res.send(
+        '<h1>Store API</h1><a href="/api/v1/products">Products route</a>',
+      );
     });
   }
 
@@ -64,6 +69,7 @@ class App {
       if (err instanceof CustomAPIError) {
         return res.status(err.ststusCode).json({ msg: err.message });
       }
+
       res.status(500).json({ msg: `Somthing went wrong, please try again` });
     });
   }
