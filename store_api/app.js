@@ -5,6 +5,9 @@ const mongoose = require('mongoose');
 const { CustomAPIError } = require('./error/coustom-error');
 const async_errors = require('express-async-errors');
 
+const Product = require('./models/Product');
+const jsonProducts = require('./products.json');
+
 class App {
   constructor() {
     // express
@@ -29,11 +32,20 @@ class App {
 
   dbConnection() {
     mongoose
-      .connect(process.env.MONGO_URL)
+      .connect(process.env.MONGO_URI)
       .then(() => {
         console.log(
           `Connection has been established successfully. host: ${mongoose.connection.host}`,
         );
+      })
+      .then(async () => {
+        const count = await Product.find({});
+        if (count.length == 0) {
+          await Product.deleteMany();
+          await Product.create(jsonProducts);
+          console.log('create!');
+        }
+        console.log('success!');
       })
       .catch((err) => {
         console.error(`Unable to connect to the database ${err}`);

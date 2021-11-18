@@ -1,8 +1,16 @@
+const Product = require('../../models/Product');
 const asyncWrapper = require('../../middleWare/async');
 
+exports.get_products_static = asyncWrapper(async (req, res) => {
+  const products = await Product.find({
+    name: 'vase table',
+  });
+  res.status(200).json({ products, hbHits: products.length });
+});
+
 exports.get_products = asyncWrapper(async (req, res) => {
-  throw new Error('Testing async errors');
-  res.status(200).json({ msg: 'all products' });
+  const products = await Product.find(req.query);
+  res.status(200).json({ products, hbHits: products.length });
 });
 
 exports.create_product = asyncWrapper(async (req, res) => {
