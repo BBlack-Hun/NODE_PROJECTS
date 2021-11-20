@@ -23,7 +23,12 @@ exports.get_products = asyncWrapper(async (req, res) => {
   }
 
   // console.log(queryObject);
-  const products = await Product.find(queryObject);
+  let result = Product.find(queryObject);
+  if (sort) {
+    const sortList = sort.split(',').join(' '); //,로 쪼갠후 공백으로 다시 문자열로 만든다.
+    result = result.sort(sortList);
+  }
+  const products = await result;
   res.status(200).json({ products, hbHits: products.length });
 });
 
