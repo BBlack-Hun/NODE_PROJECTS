@@ -2,19 +2,20 @@ const Product = require('../../models/Product');
 const asyncWrapper = require('../../middleWare/async');
 
 exports.get_products_static = asyncWrapper(async (req, res) => {
-  const products = await Product.find({}).sort('-name price');
+  const products = await Product.find({}).select('name price');
 
   res.status(200).json({ products, hbHits: products.length });
 });
 
 exports.get_products = asyncWrapper(async (req, res) => {
-  const { featured, company, name, sort } = req.query;
+  const { featured, company, name, sort, fields } = req.query;
   const queryObject = {};
 
   if (featured) {
     queryObject.featured = featured === 'true' ? true : false;
   }
   if (company) {
+    s;
     queryObject.company = company;
   }
 
@@ -24,10 +25,19 @@ exports.get_products = asyncWrapper(async (req, res) => {
 
   // console.log(queryObject);
   let result = Product.find(queryObject);
+  // sort
   if (sort) {
     const sortList = sort.split(',').join(' '); //,로 쪼갠후 공백으로 다시 문자열로 만든다.
     result = result.sort(sortList);
+  } else {
+    result = result.sort('createdAt');
   }
+
+  if (fields) {
+    const fieldsList = fields.split(',').join(' '); //,로 쪼갠후 공백으로 다시 문자열로 만든다.
+    result = result.select(fieldsList);
+  }
+
   const products = await result;
   res.status(200).json({ products, hbHits: products.length });
 });
