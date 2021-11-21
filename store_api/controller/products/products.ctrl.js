@@ -2,7 +2,9 @@ const Product = require('../../models/Product');
 const asyncWrapper = require('../../middleWare/async');
 
 exports.get_products_static = asyncWrapper(async (req, res) => {
-  const products = await Product.find({}).select('name price');
+  const products = await Product.find({}).sort('name').select('name price');
+  // .limit(10);
+  // skip은 파라미터로 입력 받은 페이지 만큼 skip을 하고 출력한다.
 
   res.status(200).json({ products, hbHits: products.length });
 });
@@ -37,6 +39,14 @@ exports.get_products = asyncWrapper(async (req, res) => {
     const fieldsList = fields.split(',').join(' '); //,로 쪼갠후 공백으로 다시 문자열로 만든다.
     result = result.select(fieldsList);
   }
+
+  const page = Number(req.query.page) || 1;
+  const limit = Number(req.query.limit) || 10;
+  const skip = (page - 1) * limit;
+
+  result = result.skip(skip).limit(limit);
+  // 23
+  // 4 7 7 7 2
 
   const products = await result;
   res.status(200).json({ products, hbHits: products.length });
