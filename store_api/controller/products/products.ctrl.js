@@ -2,7 +2,9 @@ const Product = require('../../models/Product');
 const asyncWrapper = require('../../middleWare/async');
 
 exports.get_products_static = asyncWrapper(async (req, res) => {
-  const products = await Product.find({}).sort('name').select('name price');
+  const products = await Product.find({ price: { $gt: 30 } })
+    .sort('name')
+    .select('name price');
   // .limit(10);
   // skip은 파라미터로 입력 받은 페이지 만큼 skip을 하고 출력한다.
 
@@ -10,14 +12,13 @@ exports.get_products_static = asyncWrapper(async (req, res) => {
 });
 
 exports.get_products = asyncWrapper(async (req, res) => {
-  const { featured, company, name, sort, fields } = req.query;
+  const { featured, company, name, sort, fields, numericFilters } = req.query;
   const queryObject = {};
 
   if (featured) {
     queryObject.featured = featured === 'true' ? true : false;
   }
   if (company) {
-    s;
     queryObject.company = company;
   }
 
@@ -25,7 +26,29 @@ exports.get_products = asyncWrapper(async (req, res) => {
     queryObject.name = { $regex: name, $options: 'i' }; // regex로 fullbname을 입력하지 않아도 입력한 것이 포함되어 있으면 출력해줌
   }
 
-  // console.log(queryObject);
+  if (numericFilters) {
+    const operatorMap = {
+      '>': '$gt',
+      '>=': '$gte',
+      '=': '$eq',
+      '<=': '$lte',
+      '<': '$lt',
+    };
+    const regEx = /\b(<|>|>=|<=|=)\b/g;
+    let filters = numericFilters.replace(
+      regEx,
+      (match) => `-${operatorMap[match]}-`,
+    );
+    const options = ['price', 'rating'];
+    filters = filters.split(',').forEach((item) => {
+      const [field, operator, value] = item.split('-');
+      if (options.includes(field)) {
+        queryObject[field] = { [operator]: Number(value) };
+      }
+    });
+  }
+
+  console.log(queryObject);
   let result = Product.find(queryObject);
   // sort
   if (sort) {
