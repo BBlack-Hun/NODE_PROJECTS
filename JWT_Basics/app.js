@@ -50,7 +50,9 @@ class App {
     this.app.use('/api', require('./controller'));
   }
 
-  setStatic() {}
+  setStatic() {
+    this.app.use(express.static('./public'));
+  }
 
   status404() {
     this.app.use((req, res, _) => {
