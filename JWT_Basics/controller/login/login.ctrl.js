@@ -2,7 +2,7 @@ const asyncWrapper = require('../../middleWare/async');
 const CustomApiError = require('../../error/coustom-error');
 const jwt = require('jsonwebtoken');
 
-exports.post_login = asyncWrapper((req, res) => {
+exports.post_login = asyncWrapper(async (req, res) => {
   const { username, password } = req.body;
   // mongoose validation
   // Joi
