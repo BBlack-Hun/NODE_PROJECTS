@@ -1,5 +1,5 @@
 const asyncWrapper = require('../../middleWare/async');
-const CustomApiError = require('../../error/coustom-error');
+const CustomAPIError = require('../../error/custom-error');
 const jwt = require('jsonwebtoken');
 
 exports.post_login = asyncWrapper(async (req, res) => {
@@ -9,7 +9,7 @@ exports.post_login = asyncWrapper(async (req, res) => {
   // check in the controller
 
   if (!username || !password) {
-    throw new CustomApiError('Please provide email and password', 400);
+    throw new CustomAPIError('Please provide email and password', 400);
   }
   // just for demo, normally provided by DB!!!
   const id = new Date().getDate();

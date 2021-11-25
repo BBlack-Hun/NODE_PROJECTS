@@ -2,7 +2,7 @@ const express = require('express');
 const dotenv = require('dotenv');
 const logger = require('morgan');
 const mongoose = require('mongoose');
-const { CustomAPIError } = require('./error/coustom-error');
+const { CustomAPIError } = require('./error/custom-error');
 const async_errors = require('express-async-errors');
 
 class App {
