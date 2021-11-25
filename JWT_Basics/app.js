@@ -3,6 +3,7 @@ const dotenv = require('dotenv');
 const logger = require('morgan');
 const mongoose = require('mongoose');
 const { CustomAPIError } = require('./error/custom-error');
+const { StatusCodes } = require('http-status-codes');
 const async_errors = require('express-async-errors');
 
 class App {
@@ -66,7 +67,9 @@ class App {
         return res.status(err.ststusCode).json({ msg: err.message });
       }
 
-      res.status(500).json({ msg: `Somthing went wrong, please try again` });
+      res
+        .status(StatusCodes.INTERNAL_SERVER_ERROR)
+        .json({ msg: `Somthing went wrong, please try again` });
     });
   }
 }
