@@ -4,7 +4,7 @@ const logger = require('morgan');
 const dotenv = require('dotenv');
 const async_errors = require('express-async-errors');
 const { CustomAPIError } = require('./error/custom-error');
-const { StatusCodes } = require('http-stsuts-codes');
+const { StatusCodes } = require('http-status-codes');
 
 class App {
   constructor() {
@@ -34,7 +34,7 @@ class App {
       .connect(process.env.MONGO_URI)
       .then(() => {
         console.log(
-          `Connection has been established successfully. host: ${mongoose.connect.host}`,
+          `Connection has been established successfully. host: ${mongoose.connection.host}`,
         );
       })
       .catch((err) => {
@@ -52,7 +52,11 @@ class App {
     this.app.use('/api', require('./controller'));
   }
 
-  setStatic() {}
+  setStatic() {
+    this.app.use('/', (req, res) => {
+      res.send('job api');
+    });
+  }
 
   setStatus404() {
     this.app.use((req, res, _) => {
