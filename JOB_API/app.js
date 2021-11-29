@@ -48,14 +48,14 @@ class App {
     this.app.use(logger('tiny'));
   }
 
-  getRouting() {
-    this.app.use('/api', require('./controller'));
-  }
-
   setStatic() {
-    this.app.use('/', (req, res) => {
+    this.app.get('/', (req, res) => {
       res.send('job api');
     });
+  }
+
+  getRouting() {
+    this.app.use('/api', require('./controller'));
   }
 
   setStatus404() {
