@@ -19,7 +19,7 @@ const UserSchema = new mongoose.Schema(
     },
     password: {
       type: String,
-      requried: [true, 'Please provide password'],
+      required: [true, 'Please provide password'],
       minlength: 6,
       maxlength: 12, // 패스워스 해쉬로 암호화 할 것이기 때문에 지울 예정
     },
