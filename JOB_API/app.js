@@ -69,7 +69,7 @@ class App {
       if (err instanceof CustomAPIError) {
         return res.status(err.ststusCode).json({ msg: err.message });
       }
-
+      console.error(err);
       res
         .status(StatusCodes.INTERNAL_SERVER_ERROR)
         .json({ msg: `Somthing went wrong, please try again` });
