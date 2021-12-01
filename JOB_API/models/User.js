@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 const UserSchema = new mongoose.Schema(
   {
@@ -34,5 +35,21 @@ UserSchema.pre('save', async function (next) {
   this.password = await bcrypt.hash(this.password, salt);
   next();
 });
+
+// method를 이용한 이름을 반환하는 getter를 정의
+// UserSchema.methods.getName = function () {
+//   return this.name;
+// };
+
+// method를 이용한 JWT를 생성하는 prototype 함수 정의
+UserSchema.methods.createJWT = function () {
+  return jwt.sign(
+    { userId: this._id, name: this.name },
+    process.env.JWT_SECRET,
+    {
+      expiresIn: process.env.JWT_LIFETIME,
+    },
+  );
+};
 
 module.exports = mongoose.model('User', UserSchema);

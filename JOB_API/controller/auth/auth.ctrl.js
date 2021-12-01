@@ -1,21 +1,21 @@
 const User = require('../../models/User');
 const asyncWrapper = require('../../middleware/async');
 const { StatusCodes } = require('http-status-codes');
-const jwt = require('jsonwebtoken');
+const { BadRequestError } = require('../../error/bad-request');
 
 exports.post_register = asyncWrapper(async (req, res) => {
   const user = await User.create({ ...req.body });
-  const token = jwt.sign(
-    { userId: user._id, name: user.name },
-    process.env.JWT_SECRET,
-    {
-      expiresIn: '30d',
-      httpOnly: true,
-    },
-  );
-  res.status(StatusCodes.CREATED).json({ token });
+  const token = user.createJWT();
+  res.status(StatusCodes.CREATED).json({ user: { name: user.name }, token });
 });
 
 exports.post_login = asyncWrapper(async (req, res) => {
+  const { email, password } = req.body;
+  if (!email || !password) {
+    throw new BadRequestError('Please provide email and password');
+  }
+
+  const user = await User.findOne({ email });
+
   res.send('login user');
 });
