@@ -36,7 +36,7 @@ UserSchema.pre('save', async function (next) {
   next();
 });
 
-// method를 이용한 이름을 반환하는 getter를 정의
+// method를 이용한 이름을 반환하는 간단한 getter를 정의
 // UserSchema.methods.getName = function () {
 //   return this.name;
 // };
@@ -50,6 +50,11 @@ UserSchema.methods.createJWT = function () {
       expiresIn: process.env.JWT_LIFETIME,
     },
   );
+};
+
+UserSchema.methods.comparePassword = async function (canditatePassword) {
+  const isMatch = await bcrypt.compare(canditatePassword, this.password);
+  return isMatch;
 };
 
 module.exports = mongoose.model('User', UserSchema);
