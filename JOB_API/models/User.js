@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
 
 const UserSchema = new mongoose.Schema(
   {
@@ -26,5 +27,12 @@ const UserSchema = new mongoose.Schema(
   },
   { timestamps: true },
 );
+
+// Pre라는 것을 사용하여, 미리 패스워드에 관한 내용을 정의해 줄 수 있다. // next를 써도 되고 안써도 된다.
+UserSchema.pre('save', async function (next) {
+  const salt = await bcrypt.genSalt(10);
+  this.password = await bcrypt.hash(this.password, salt);
+  next();
+});
 
 module.exports = mongoose.model('User', UserSchema);
