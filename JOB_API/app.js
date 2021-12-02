@@ -67,15 +67,13 @@ class App {
   setErrorHandler() {
     this.app.use((err, req, res, _) => {
       if (err instanceof CustomAPIError) {
-        return res.status(err.ststusCode).json({ msg: err.message });
+        return res.status(err.statusCode).json({ msg: err.message });
       }
-
-      res
-        .status(StatusCodes.INTERNAL_SERVER_ERROR)
-        .json({
-          err: err.message,
-          msg: `Somthing went wrong, please try again`,
-        });
+      console.log(err);
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+        err: err.message,
+        msg: `Somthing went wrong, please try again`,
+      });
     });
   }
 }

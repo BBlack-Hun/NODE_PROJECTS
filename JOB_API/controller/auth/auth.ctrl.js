@@ -1,8 +1,8 @@
 const User = require('../../models/User');
 const asyncWrapper = require('../../middleware/async');
 const { StatusCodes } = require('http-status-codes');
-const { BadRequestError } = require('../../error/bad-request');
-const { Unauthenticated } = require('../../error/unauthenticated');
+const BadRequestError = require('../../error/bad-request');
+const UnauthenticatedError = require('../../error/unauthenticated');
 
 exports.post_register = asyncWrapper(async (req, res) => {
   const user = await User.create({ ...req.body });
@@ -17,11 +17,15 @@ exports.post_login = asyncWrapper(async (req, res) => {
   }
 
   const user = await User.findOne({ email });
-  // compare password
   if (!user) {
-    throw new Unauthenticated('Invalid Credentials');
+    throw new UnauthenticatedError('Invalid Credentials');
   }
 
+  const isPasswordCorrect = await user.comparePassword(password);
+  if (!isPasswordCorrect) {
+    throw new UnauthenticatedError('Invalid Credentials');
+  }
+  // compare password
   const token = user.createJWT();
   res.status(StatusCodes.OK).json({ user: { name: user.name }, token });
 });
