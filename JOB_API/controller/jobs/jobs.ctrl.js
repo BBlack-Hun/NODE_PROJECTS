@@ -9,7 +9,7 @@ exports.get_job = asyncWrapper(async (req, res) => {
 });
 
 exports.post_create_job = asyncWrapper(async (req, res) => {
-  res.send('create job');
+  res.send(req.user);
 });
 
 exports.update_job = asyncWrapper(async (req, res) => {
