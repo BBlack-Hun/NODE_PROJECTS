@@ -4,8 +4,8 @@ const { StatusCodes } = require('http-status-codes');
 const BadRequestError = require('../../error/bad-request');
 
 exports.get_all_jobs = asyncWrapper(async (req, res) => {
-  const job = await Job.find({});
-  res.status(StatusCodes.OK).json({ job });
+  const jobs = await Job.find({ createdBy: req.user.userId }).sort('createdAt');
+  res.status(StatusCodes.OK).json({ jobs, count: jobs.length });
 });
 
 exports.get_job = asyncWrapper(async (req, res) => {
