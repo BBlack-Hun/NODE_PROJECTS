@@ -4,7 +4,8 @@ const { StatusCodes } = require('http-status-codes');
 const BadRequestError = require('../../error/bad-request');
 
 exports.get_all_jobs = asyncWrapper(async (req, res) => {
-  res.send('get all jobs');
+  const job = await Job.find({});
+  res.status(StatusCodes.OK).json({ job });
 });
 
 exports.get_job = asyncWrapper(async (req, res) => {
