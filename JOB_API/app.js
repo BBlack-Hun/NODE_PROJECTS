@@ -66,14 +66,23 @@ class App {
 
   setErrorHandler() {
     this.app.use((err, req, res, _) => {
+      let customError = {
+        // set default
+        statusCode: err.statusCode || StatusCodes.INTERNAL_SERVER_ERROR,
+        msg: err.message || 'SomeTihing went wrong try again later',
+      };
+
       if (err instanceof CustomAPIError) {
         return res.status(err.statusCode).json({ msg: err.message });
       }
-      console.log(err);
-      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-        err: err.message,
-        msg: `Somthing went wrong, please try again`,
-      });
+      if (err.code && err.code === 11000) {
+        customError.msg = `Duplicate value entered for ${err.keyValue} field, please choose another value`;
+      }
+      // res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      //   err: err.message,
+      //   msg: `Somthing went wrong, please try again`,
+      // });
+      res.status(customError.statusCode).json({ msg: customError.msg });
     });
   }
 }
