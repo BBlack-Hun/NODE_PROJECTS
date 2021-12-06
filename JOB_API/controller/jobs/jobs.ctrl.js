@@ -30,7 +30,27 @@ exports.post_create_job = asyncWrapper(async (req, res) => {
 });
 
 exports.update_job = asyncWrapper(async (req, res) => {
-  res.send('update job');
+  const {
+    body: { company, position },
+    user: { userId },
+    params: { id: jobID },
+  } = req;
+
+  if (company === '' || position === '') {
+    throw new BadRequestError('Company or Postion fields cannot bd empty');
+  }
+
+  const job = await Job.findByIdAndUpdate(
+    { _id: jobID, createdBy: userId },
+    req.body,
+    { new: true, runValidators: true },
+  );
+
+  if (!job) {
+    throw new NotFoundError(`No job with id ${jobID}`);
+  }
+
+  res.status(StatusCodes.CREATED).json({ job });
 });
 
 exports.delete_job = asyncWrapper(async (req, res) => {
