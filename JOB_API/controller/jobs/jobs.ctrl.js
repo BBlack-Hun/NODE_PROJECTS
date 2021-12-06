@@ -54,5 +54,16 @@ exports.update_job = asyncWrapper(async (req, res) => {
 });
 
 exports.delete_job = asyncWrapper(async (req, res) => {
-  res.send('delete job');
+  const {
+    user: { userId },
+    params: { id: jobID },
+  } = req;
+
+  const job = await Job.findByIdAndRemove({ _id: jobID, createdBy: userId });
+
+  if (!job) {
+    throw new NotFoundError(`No job with id ${jobID}`);
+  }
+
+  res.status(StatusCodes.CREATED).send();
 });
