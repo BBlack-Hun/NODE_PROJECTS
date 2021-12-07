@@ -3,7 +3,6 @@ const mongoose = require('mongoose');
 const logger = require('morgan');
 const dotenv = require('dotenv');
 const async_errors = require('express-async-errors');
-const { CustomAPIError } = require('./error/custom-error');
 const { StatusCodes } = require('http-status-codes');
 
 class App {
@@ -75,6 +74,12 @@ class App {
       // if (err instanceof CustomAPIError) {
       //   return res.status(err.statusCode).json({ msg: err.message });
       // }
+      if (err.name === 'ValidationError') {
+        customError.msg = Object.values(err.erros).map((item) => {
+          item.message.join(',');
+        });
+        customError.statusCode = 400;
+      }
       if (err.code && err.code === 11000) {
         customError.msg = `Duplicate value entered for ${Object.keys(
           err.keyValue,
