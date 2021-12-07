@@ -72,11 +72,14 @@ class App {
         msg: err.message || 'SomeTihing went wrong try again later',
       };
 
-      if (err instanceof CustomAPIError) {
-        return res.status(err.statusCode).json({ msg: err.message });
-      }
+      // if (err instanceof CustomAPIError) {
+      //   return res.status(err.statusCode).json({ msg: err.message });
+      // }
       if (err.code && err.code === 11000) {
-        customError.msg = `Duplicate value entered for ${err.keyValue} field, please choose another value`;
+        customError.msg = `Duplicate value entered for ${Object.keys(
+          err.keyValue,
+        )} field, please choose another value`;
+        customError.statusCode = 400;
       }
       // res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
       //   err: err.message,
