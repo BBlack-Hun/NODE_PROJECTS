@@ -75,9 +75,9 @@ class App {
       //   return res.status(err.statusCode).json({ msg: err.message });
       // }
       if (err.name === 'ValidationError') {
-        customError.msg = Object.values(err.erros).map((item) => {
-          item.message.join(',');
-        });
+        customError.msg = Object.values(err.errors)
+          .map((item) => item.message)
+          .join(',');
         customError.statusCode = 400;
       }
       if (err.code && err.code === 11000) {
@@ -87,7 +87,7 @@ class App {
         customError.statusCode = 400;
       }
       // res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-      //   err: err.message,
+      //   err: err,
       //   msg: `Somthing went wrong, please try again`,
       // });
       res.status(customError.statusCode).json({ msg: customError.msg });
