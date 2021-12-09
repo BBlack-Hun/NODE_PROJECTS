@@ -4,6 +4,10 @@ const logger = require('morgan');
 const dotenv = require('dotenv');
 const async_errors = require('express-async-errors');
 const { StatusCodes } = require('http-status-codes');
+const helmet = require('helmet');
+const cors = require('cors');
+const xss = require('xss-clean');
+const rateLimiter = require('express-rate-limit');
 
 class App {
   constructor() {
@@ -45,6 +49,16 @@ class App {
   setMiddleWare() {
     this.app.use(express.json());
     this.app.use(logger('tiny'));
+    this.app.use(cors());
+    this.app.use(helmet());
+    this.app.use(xss());
+    this.app.set('trust proxy', 1);
+    this.app.use(
+      rateLimiter({
+        windowMs: 15 * 60 * 1000, // 15minute
+        max: 1000, // limit each IP to 100 requests per windowMs
+      }),
+    );
   }
 
   setStatic() {
