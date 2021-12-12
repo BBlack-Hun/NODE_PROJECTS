@@ -49,22 +49,20 @@ class app {
   setMiddleWare() {
     this.app.use(express.json());
     this.app.use(logger('tiny'));
-    this.app.use(cors());
-    this.app.use(helmet());
-    this.app.use(xss());
-    this.app.set('trust proxy', 1);
-    this.app.use(
-      rateLimiter({
-        windowMs: 15 * 60 * 1000, // 15minute
-        max: 1000, // limit each IP to 100 requests per windowMs
-      }),
-    );
+    // this.app.use(cors());
+    // this.app.use(helmet());
+    // this.app.use(xss());
+    // this.app.set('trust proxy', 1);
+    // this.app.use(
+    //   rateLimiter({
+    //     windowMs: 15 * 60 * 1000, // 15minute
+    //     max: 1000, // limit each IP to 100 requests per windowMs
+    //   }),
+    // );
   }
 
   setStatic() {
-    this.app.get('/', (req, res) => {
-      res.send('<h1>FILE UPLOAD API(local & cloudary</h1>');
-    });
+    this.app.use(express.static('./public'));
   }
 
   getRouting() {
@@ -85,9 +83,6 @@ class app {
         msg: err.message || 'SomeTihing went wrong try again later',
       };
 
-      // if (err instanceof CustomAPIError) {
-      //   return res.status(err.statusCode).json({ msg: err.message });
-      // }
       if (err.name === 'ValidationError') {
         console.log(Object.values(err.errors));
         customError.msg = Object.values(err.errors)
