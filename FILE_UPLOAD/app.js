@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const logger = require('morgan');
 const dotenv = require('dotenv');
 const async_errors = require('express-async-errors');
+const bodyParser = require('body-parser');
 const { StatusCodes } = require('http-status-codes');
 const helmet = require('helmet');
 const cors = require('cors');
@@ -49,6 +50,8 @@ class app {
   setMiddleWare() {
     this.app.use(express.json());
     this.app.use(logger('tiny'));
+    this.app.use(bodyParser.json());
+    this.app.use(bodyParser.urlencoded({ extended: false }));
     // this.app.use(cors());
     // this.app.use(helmet());
     // this.app.use(xss());

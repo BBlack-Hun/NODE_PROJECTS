@@ -13,5 +13,7 @@ exports.get_all_products = asyncWrapper(async (req, res) => {
 });
 
 exports.post_upload_image = asyncWrapper(async (req, res) => {
+  req.body.image = req.file ? req.file.filename : '';
+  console.log(req);
   res.send('upload product image');
 });
