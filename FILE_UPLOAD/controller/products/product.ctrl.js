@@ -9,7 +9,8 @@ exports.post_create_product = asyncWrapper(async (req, res) => {
 });
 
 exports.get_all_products = asyncWrapper(async (req, res) => {
-  res.send('list of products');
+  const products = await Product.find({});
+  res.status(StatusCodes.OK).json({ products });
 });
 
 exports.post_upload_image = asyncWrapper(async (req, res) => {
@@ -17,5 +18,5 @@ exports.post_upload_image = asyncWrapper(async (req, res) => {
   console.log(req);
   res
     .status(StatusCodes.OK)
-    .json({ image: { src: `/images/${req.body.image}` } });
+    .json({ image: { src: `/uploads/${req.body.image}` } });
 });
