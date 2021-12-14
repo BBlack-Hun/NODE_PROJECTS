@@ -15,18 +15,6 @@ exports.get_all_products = asyncWrapper(async (req, res) => {
 });
 
 exports.post_upload_image = asyncWrapper(async (req, res) => {
-  const maxSize = 1000;
-  if (!req.file) {
-    throw new BadRequestError('No file uploaded!');
-  }
-  if (!req.file.mimetype.startsWith('image')) {
-    throw new BadRequestError('Please Upload Image');
-  }
-
-  if (req.file.size > maxSize) {
-    throw new BadRequestError('Please upload image smaller 1KB');
-  }
-
   req.body.image = req.file ? req.file.filename : '';
   res
     .status(StatusCodes.OK)

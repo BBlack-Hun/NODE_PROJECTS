@@ -99,6 +99,10 @@ class app {
         )} field, please choose another value`;
         customError.statusCode = 400;
       }
+      if (err.code === 'LIMIT_FILE_SIZE') {
+        customError.msg = 'Please upload image smaller 1KB';
+        customError.StatusCodes = 500;
+      }
       if (err.name === 'CastError') {
         customError.msg = `No item found with id : ${err.value}`;
         customError.statusCode = 404;
