@@ -86,6 +86,8 @@ class app {
         msg: err.message || 'SomeTihing went wrong try again later',
       };
 
+      console.log(err);
+
       if (err.name === 'ValidationError') {
         console.log(Object.values(err.errors));
         customError.msg = Object.values(err.errors)
@@ -103,6 +105,7 @@ class app {
         customError.msg = 'Please upload image smaller 1KB';
         customError.StatusCodes = 500;
       }
+
       if (err.name === 'CastError') {
         customError.msg = `No item found with id : ${err.value}`;
         customError.statusCode = 404;

@@ -15,6 +15,9 @@ exports.get_all_products = asyncWrapper(async (req, res) => {
 });
 
 exports.post_upload_image = asyncWrapper(async (req, res) => {
+  if (!req.file) {
+    throw new BadRequestError('No file uploaded!');
+  }
   req.body.image = req.file ? req.file.filename : '';
   res
     .status(StatusCodes.OK)
