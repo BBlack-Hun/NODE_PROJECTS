@@ -2,7 +2,7 @@
 const path = require('path');
 const uploadDir = path.join(__dirname, '../public/uploads'); // public 폴더의 uploads위치에 저장한다.
 const BadRequestError = require('../errors/bad-request');
-const maxSize = 1024 * 1024;
+const maxSize = 1024 * 1024 * 10;
 
 //multer 셋팅
 const multer = require('multer');
