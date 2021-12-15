@@ -9,6 +9,7 @@ const helmet = require('helmet');
 const cors = require('cors');
 const xss = require('xss-clean');
 const rateLimiter = require('express-rate-limit');
+const cloudinary = require('cloudinary').v2;
 
 class app {
   constructor() {
@@ -21,6 +22,8 @@ class app {
 
     // DB_CONNECT
     this.db_connection();
+    // cloudinary
+    this.cloudinary();
     // MIDDLEWARE
     this.setMiddleWare();
     // STATIC
@@ -45,6 +48,14 @@ class app {
         console.error(`Unable to connect to the datebase ${err}`);
         process.exit(1);
       });
+  }
+
+  cloudinary() {
+    cloudinary.config({
+      cloud_name: process.env.CLOUD_NAME,
+      api_key: process.env.CLOUD_KEY,
+      api_secret: process.env.CLOUD_SECRET,
+    });
   }
 
   setMiddleWare() {
