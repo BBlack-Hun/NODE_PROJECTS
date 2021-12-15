@@ -16,6 +16,7 @@ exports.get_all_products = asyncWrapper(async (req, res) => {
 });
 
 exports.post_upload_image = asyncWrapper(async (req, res) => {
+  const fs = require('fs');
   if (!req.file) {
     throw new BadRequestError('No file uploaded!');
   }
@@ -24,6 +25,7 @@ exports.post_upload_image = asyncWrapper(async (req, res) => {
     use_filename: true,
     folder: 'file_uploads',
   });
+  fs.unlinkSync(req.file.path);
   console.log(result);
 
   res.status(StatusCodes.OK).json({
