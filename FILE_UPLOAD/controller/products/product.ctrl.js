@@ -29,6 +29,6 @@ exports.post_upload_image = asyncWrapper(async (req, res) => {
   console.log(result);
 
   res.status(StatusCodes.OK).json({
-    image: { src: `/uploads/${req.body.image}`, src2: result.secure_url },
+    image: { src: result.secure_url },
   });
 });
