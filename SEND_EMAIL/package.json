@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@sendgrid/mail": "^7.6.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.1",
     "cloudinary": "^1.27.1",
@@ -29,5 +30,8 @@
     "swagger-ui-express": "^4.2.0",
     "xss-clean": "^0.1.1",
     "yamljs": "^0.3.0"
+  },
+  "engines": {
+    "node": "16.x"
   }
 }
