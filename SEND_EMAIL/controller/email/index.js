@@ -1,6 +1,7 @@
 const { Router } = require('express');
 const router = Router();
+const ctrl = require('./eamil.ctrl');
 
-router.use('/v1/', require('./email'));
+router.get('/send', ctrl.get_send_email);
 
 module.exports = router;
