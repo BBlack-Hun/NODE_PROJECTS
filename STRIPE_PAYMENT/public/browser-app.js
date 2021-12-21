@@ -6,14 +6,14 @@ const total_amount = 10998;
 const shipping_fee = 1099;
 
 var stripe = Stripe(
-  'pk_test_51I87djFp5pnuKUXgBVIHiR36vVAWyfuyb7ckrhgyDNA1kM0GWHas9ZGUAgwJSFNUxrbyE6NwlMNmls1iGSfzHDdE00DQB3y6AH',
+  'pk_test_51K98hvG8an4sLrSTu2JNOrQlFJXYnti0pgx70ZDtfB2qSJsfpEf6k81vcaisUAWa1xKmUPaC9UPHYUNgc0mftpVw00TwcO3Cj7',
 );
 
 // The items the customer wants to buy
 
 // Disable the button until we have Stripe set up on the page
 document.querySelector('button').disabled = true;
-fetch('/stripe', {
+fetch('api/v1/stripe', {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json',

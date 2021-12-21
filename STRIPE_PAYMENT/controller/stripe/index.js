@@ -1,5 +1,5 @@
 const { Router } = require('express');
 const router = Router();
-// const ctrl = require('./eamil.ctrl');
+const ctrl = require('./stripe.ctrl');
 
 module.exports = router;
