@@ -74,7 +74,7 @@ class app {
         max: 1000, // limit each IP to 100 requests per windowMs
       }),
     );
-    app.use(mongoSanitize());
+    this.app.use(mongoSanitize());
   }
 
   setStatic() {
