@@ -78,7 +78,10 @@ class app {
   }
 
   setStatic() {
-    this.app.use(express.static('./public'));
+    // this.app.use(express.static('./public'));
+    this.app.get('/', (req, res) => {
+      res.send('e-commerce-api');
+    });
   }
 
   getRouting() {
