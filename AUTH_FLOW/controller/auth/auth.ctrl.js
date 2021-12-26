@@ -1,13 +1,13 @@
 const asyncWrapper = require('../../middleware/async');
 
 exports.post_register = asyncWrapper(async (req, res) => {
-  res.sned('register');
+  res.send('register user');
 });
 
 exports.post_login = asyncWrapper(async (req, res) => {
-  res.sned('register');
+  res.send('login user');
 });
 
 exports.get_logout = asyncWrapper(async (req, res) => {
-  res.sned('register');
+  res.send('logout user');
 });
