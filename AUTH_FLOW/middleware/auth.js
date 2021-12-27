@@ -1,12 +1,12 @@
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
-const unAuthenticatedError = require('../error');
+const CustomError = require('../error');
 
 const authenticationMiddleWare = async (req, res, next) => {
   const authHeader = req.headers.authorization;
   //   console.log(authHeader);
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
-    throw new unAuthenticatedError('Authentication invalid');
+    throw new CustomError.unAuthenticatedError('Authentication invalid');
   }
   const token = authHeader.split(' ')[1];
   try {
@@ -23,7 +23,7 @@ const authenticationMiddleWare = async (req, res, next) => {
     req.user = { userId: payload.userId, name: payload.name };
     next();
   } catch (error) {
-    throw new unAuthenticatedError('Authentication invalid');
+    throw new CustomError.unAuthenticatedError('Authentication invalid');
   }
 };
 

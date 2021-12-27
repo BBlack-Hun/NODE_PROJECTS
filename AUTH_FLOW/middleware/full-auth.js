@@ -1,4 +1,4 @@
-const unAuthenticatedError = require('../errors');
+const CustomError = require('../errors');
 const { isTokenValid } = require('../utils/jwt');
 
 const authenticateUser = async (req, res, next) => {
@@ -14,7 +14,7 @@ const authenticateUser = async (req, res, next) => {
   }
 
   if (!token) {
-    throw new unAuthenticatedError('Authentication invalid');
+    throw new CustomError.unAuthenticatedError('Authentication invalid');
   }
   try {
     const payload = isTokenValid(token);
@@ -27,14 +27,16 @@ const authenticateUser = async (req, res, next) => {
 
     next();
   } catch (error) {
-    throw new unAuthenticatedError('Authentication invalid');
+    throw new CustomError.unAuthenticatedError('Authentication invalid');
   }
 };
 
 const authorizeRoles = (...roles) => {
   return (req, res, next) => {
     if (!roles.includes(req.user.role)) {
-      throw new unAuthenticatedError('Unauthorized to access this route');
+      throw new CustomError.unAuthenticatedError(
+        'Unauthorized to access this route',
+      );
     }
     next();
   };
