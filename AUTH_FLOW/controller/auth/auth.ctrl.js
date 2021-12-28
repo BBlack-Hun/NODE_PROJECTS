@@ -16,7 +16,8 @@ exports.post_register = asyncWrapper(async (req, res) => {
   const role = isFisrtAccount ? 'admin' : 'user';
 
   const user = await User.create({ name, email, password, role });
-  res.status(StatusCodes.CREATED).json({ user });
+  const token = await User.createJWT({});
+  res.status(StatusCodes.CREATED).json({ user: { name: user.name }, token });
 });
 
 exports.post_login = asyncWrapper(async (req, res) => {
