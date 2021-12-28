@@ -4,14 +4,18 @@ const CustomError = require('../../errors');
 const asyncWrapper = require('../../middleware/async');
 
 exports.post_register = asyncWrapper(async (req, res) => {
-  const { email } = req.body;
+  const { email, name, password } = req.body;
 
   const emailAlreadyExists = await User.findOne({ email });
   if (emailAlreadyExists) {
     throw new CustomError.badRequestError('Email already exists');
   }
 
-  const user = await User.create(req.body);
+  // first registered user is an admin
+  const isFisrtAccount = (await User.countDocuments({})) === 0;
+  const role = isFisrtAccount ? 'admin' : 'user';
+
+  const user = await User.create({ name, email, password, role });
   res.status(StatusCodes.CREATED).json({ user });
 });
 
