@@ -2,6 +2,7 @@ const User = require('../../models/User');
 const { StatusCodes } = require('http-status-codes');
 const CustomError = require('../../errors');
 const asyncWrapper = require('../../middleware/async');
+const { createJWT } = require('../../utils');
 
 exports.post_register = asyncWrapper(async (req, res) => {
   const { email, name, password } = req.body;
@@ -16,8 +17,9 @@ exports.post_register = asyncWrapper(async (req, res) => {
   const role = isFisrtAccount ? 'admin' : 'user';
 
   const user = await User.create({ name, email, password, role });
-  const token = await User.createJWT({});
-  res.status(StatusCodes.CREATED).json({ user: { name: user.name }, token });
+  const tokenUser = { name: user.name, userId: user._id, role: user.role };
+  const token = await createJWT({ payload: tokenUser });
+  res.status(StatusCodes.CREATED).json({ user: tokenUser, token });
 });
 
 exports.post_login = asyncWrapper(async (req, res) => {
