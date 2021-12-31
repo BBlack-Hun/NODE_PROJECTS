@@ -2,6 +2,11 @@ const { Router } = require('express');
 const router = Router();
 // const authenticationMiddleWare = require('../middleware/auth');
 
+router.get('/v1', (req, res) => {
+  console.log(req.cookies);
+  res.send('auth-flow');
+});
+
 router.use('/v1/auth', require('./auth'));
 // router.use('/v1/users', require('./users'));
 // router.use('/v1/products', require('./products'));
