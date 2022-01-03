@@ -2,7 +2,7 @@ const User = require('../../models/User');
 const { StatusCodes } = require('http-status-codes');
 const CustomError = require('../../errors');
 const asyncWrapper = require('../../middleware/async');
-const { createJWT } = require('../../utils');
+const { attachCookiesToResponse } = require('../../utils');
 
 exports.post_register = asyncWrapper(async (req, res) => {
   const { email, name, password } = req.body;
@@ -18,16 +18,9 @@ exports.post_register = asyncWrapper(async (req, res) => {
 
   const user = await User.create({ name, email, password, role });
   const tokenUser = { name: user.name, userId: user._id, role: user.role };
-  const token = await createJWT({ payload: tokenUser });
+  attachCookiesToResponse({ res, user: tokenUser });
 
-  const oneDay = 1000 * 60 * 60 * 24;
-
-  res.cookie('token', token, {
-    httpOnly: true,
-    expires: new Date(Date.now() + oneDay),
-  });
-
-  res.status(StatusCodes.CREATED).json({ user: tokenUser });
+  // res.status(StatusCodes.CREATED).json({ user: tokenUser });
 });
 
 exports.post_login = asyncWrapper(async (req, res) => {
