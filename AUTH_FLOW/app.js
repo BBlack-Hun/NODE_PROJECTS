@@ -63,7 +63,7 @@ class app {
   setMiddleWare() {
     this.app.use(express.json());
     this.app.use(logger('tiny'));
-    this.app.use(cookieParser());
+    this.app.use(cookieParser(process.env.JWT_SECRET));
     this.app.use(bodyParser.json());
     this.app.use(bodyParser.urlencoded({ extended: false }));
     this.app.use(cors());
