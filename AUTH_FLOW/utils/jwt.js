@@ -24,7 +24,7 @@ const attachCookiesToResponse = ({ res, user }) => {
     signed: true,
   });
 
-  res.status(StatusCodes.CREATED).json({ user });
+  // res.status(StatusCodes.CREATED).json({ user });
 };
 
 module.exports = {
