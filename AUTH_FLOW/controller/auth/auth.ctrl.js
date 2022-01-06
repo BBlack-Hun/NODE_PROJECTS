@@ -40,7 +40,7 @@ exports.post_login = asyncWrapper(async (req, res) => {
   }
   const tokenUser = { name: user.name, userId: user._id, role: user.role };
   attachCookiesToResponse({ res, user: tokenUser });
-  res.status(StatusCodes.CREATED).json({ user: tokenUser });
+  res.status(StatusCodes.OK).json({ user: tokenUser });
 });
 
 exports.get_logout = asyncWrapper(async (req, res) => {

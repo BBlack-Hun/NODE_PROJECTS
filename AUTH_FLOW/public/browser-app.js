@@ -35,6 +35,7 @@ testingBtn.addEventListener('click', async () => {
     console.log(error);
   }
 });
+
 logoutBtn.addEventListener('click', async () => {
   try {
     const response = await fetch('/api/v1/auth/logout');
