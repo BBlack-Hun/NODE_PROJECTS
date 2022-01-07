@@ -1,3 +1,5 @@
+const asyncWrapper = require('../../middleware/async');
+
 exports.get_AllUsers = asyncWrapper(async (req, res) => {
   res.send('get all users route');
 });
