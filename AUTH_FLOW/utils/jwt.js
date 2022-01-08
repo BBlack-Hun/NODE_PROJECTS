@@ -8,9 +8,8 @@ const createJWT = ({ payload }) => {
   return token;
 };
 
-const isTokenValid = ({ token }) => {
-  jwt.verify(token, process.env.JWT_SECRET);
-};
+// 리턴을 바로 시키려면,, {}로 감싸지 말것..
+const isTokenValid = ({ token }) => jwt.verify(token, process.env.JWT_SECRET);
 
 const attachCookiesToResponse = ({ res, user }) => {
   const token = createJWT({ payload: user });
