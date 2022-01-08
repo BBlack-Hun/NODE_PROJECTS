@@ -6,8 +6,9 @@ const authenticateUser = async (req, res, next) => {
 
   if (!token) {
     console.log(`error, no token present`);
+  } else {
+    console.log(`token present`);
   }
-  console.log(`token present`);
   next();
 };
 

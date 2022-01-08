@@ -8,9 +8,9 @@ const { authenticateUser } = require('../../middleware/authentication');
  * response로 id : showMe라는 값을 반환하게 된다.
  */
 router.get('/', authenticateUser, ctrl.get_AllUsers);
-router.get('/showMe', ctrl.get_ShowCurrentUser);
+router.get('/showMe', authenticateUser, ctrl.get_ShowCurrentUser);
 router.patch('/updateUser', ctrl.patch_updateUser);
 router.patch('/updateUserPassword', ctrl.patch_updateUserPassword);
-router.get('/:id', ctrl.get_SingleUser);
+router.get('/:id', authenticateUser, ctrl.get_SingleUser);
 
 module.exports = router;
