@@ -5,7 +5,7 @@ exports.get_AllUsers = asyncWrapper(async (req, res) => {
 });
 
 exports.get_SingleUser = asyncWrapper(async (req, res) => {
-  res.send('get single user ');
+  res.send(req.params);
 });
 
 exports.get_ShowCurrentUser = asyncWrapper(async (req, res) => {
@@ -13,9 +13,9 @@ exports.get_ShowCurrentUser = asyncWrapper(async (req, res) => {
 });
 
 exports.patch_updateUser = asyncWrapper(async (req, res) => {
-  res.send('update user');
+  res.send(req.body);
 });
 
 exports.patch_updateUserPassword = asyncWrapper(async (req, res) => {
-  res.send('update user password');
+  res.send(req.body);
 });
