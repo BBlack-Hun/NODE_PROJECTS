@@ -2,7 +2,7 @@ const User = require('../../models/User');
 const { StatusCodes } = require('http-status-codes');
 const CustomError = require('../../errors');
 const asyncWrapper = require('../../middleware/async');
-const { attachCookiesToResponse } = require('../../utils');
+const { attachCookiesToResponse, createTokenUser } = require('../../utils');
 
 exports.post_register = asyncWrapper(async (req, res) => {
   const { email, name, password } = req.body;
@@ -17,7 +17,7 @@ exports.post_register = asyncWrapper(async (req, res) => {
   const role = isFisrtAccount ? 'admin' : 'user';
 
   const user = await User.create({ name, email, password, role });
-  const tokenUser = { name: user.name, userId: user._id, role: user.role };
+  const tokenUser = createTokenUser(user);
   attachCookiesToResponse({ res, user: tokenUser });
   res.status(StatusCodes.CREATED).json({ user: tokenUser });
 });
@@ -38,7 +38,7 @@ exports.post_login = asyncWrapper(async (req, res) => {
   if (!isPasswordCorrect) {
     throw new CustomError.unAuthenticatedError('Invalid Credentials');
   }
-  const tokenUser = { name: user.name, userId: user._id, role: user.role };
+  const tokenUser = createTokenUser(user);
   attachCookiesToResponse({ res, user: tokenUser });
   res.status(StatusCodes.OK).json({ user: tokenUser });
 });
