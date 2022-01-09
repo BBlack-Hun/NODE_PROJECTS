@@ -21,7 +21,11 @@ router.get(
 );
 router.get('/showMe', authenticateUser, ctrl.get_ShowCurrentUser);
 router.patch('/updateUser', ctrl.patch_updateUser);
-router.patch('/updateUserPassword', ctrl.patch_updateUserPassword);
+router.patch(
+  '/updateUserPassword',
+  authenticateUser,
+  ctrl.patch_updateUserPassword,
+);
 router.get('/:id', authenticateUser, ctrl.get_SingleUser);
 
 module.exports = router;

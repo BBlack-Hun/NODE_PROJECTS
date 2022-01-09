@@ -27,5 +27,23 @@ exports.patch_updateUser = asyncWrapper(async (req, res) => {
 });
 
 exports.patch_updateUserPassword = asyncWrapper(async (req, res) => {
-  res.send(req.body);
+  const { oldPassword, newPassword } = req.body;
+  if (!oldPassword || !newPassword) {
+    throw new CustomError.badRequestError('please provide both values');
+  }
+  console.log(req.user);
+  const user = await User.findOne({ _id: req.user.userId });
+
+  console.log(user);
+
+  const isPasswordCorrect = await user.comparePassword(oldPassword);
+
+  if (!isPasswordCorrect) {
+    throw new CustomError.unAuthenticatedError('Invalid Credentials');
+  }
+
+  user.password = newPassword;
+
+  await user.save();
+  res.status(StatusCodes.OK).json({ msg: 'Succcess! Password Updated!' });
 });
