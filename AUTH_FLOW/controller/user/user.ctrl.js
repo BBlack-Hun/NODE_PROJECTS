@@ -19,7 +19,7 @@ exports.get_SingleUser = asyncWrapper(async (req, res) => {
 });
 
 exports.get_ShowCurrentUser = asyncWrapper(async (req, res) => {
-  res.send('show current user');
+  res.status(StatusCodes.OK).json({ user: req.user });
 });
 
 exports.patch_updateUser = asyncWrapper(async (req, res) => {
