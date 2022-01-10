@@ -20,7 +20,7 @@ router.get(
   ctrl.get_AllUsers,
 );
 router.get('/showMe', authenticateUser, ctrl.get_ShowCurrentUser);
-router.patch('/updateUser', ctrl.patch_updateUser);
+router.patch('/updateUser', authenticateUser, ctrl.patch_updateUser);
 router.patch(
   '/updateUserPassword',
   authenticateUser,

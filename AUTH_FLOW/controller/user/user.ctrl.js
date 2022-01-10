@@ -1,6 +1,7 @@
 const asyncWrapper = require('../../middleware/async');
 const User = require('../../models/User');
 const CustomError = require('../../errors');
+const { attachCookiesToResponse, createTokenUser } = require('../../utils');
 const { StatusCodes } = require('http-status-codes');
 
 exports.get_AllUsers = asyncWrapper(async (req, res) => {
@@ -23,7 +24,20 @@ exports.get_ShowCurrentUser = asyncWrapper(async (req, res) => {
 });
 
 exports.patch_updateUser = asyncWrapper(async (req, res) => {
-  res.send(req.body);
+  const { email, name } = req.body;
+
+  if (!email || !name) {
+    throw new CustomError.badRequestError('Please provide all vlaues');
+  }
+  const user = await User.findOneAndUpdate(
+    { _id: req.user.userId },
+    { email, name },
+    { new: true, runValidators: true },
+  );
+
+  const tokenUser = createTokenUser(user);
+  attachCookiesToResponse({ res, user: tokenUser });
+  res.status(StatusCodes.OK).json({ user: tokenUser });
 });
 
 exports.patch_updateUserPassword = asyncWrapper(async (req, res) => {
