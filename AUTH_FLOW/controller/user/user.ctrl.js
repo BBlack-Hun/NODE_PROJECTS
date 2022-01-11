@@ -23,17 +23,19 @@ exports.get_ShowCurrentUser = asyncWrapper(async (req, res) => {
   res.status(StatusCodes.OK).json({ user: req.user });
 });
 
+// update user with user.save()
 exports.patch_updateUser = asyncWrapper(async (req, res) => {
   const { email, name } = req.body;
 
   if (!email || !name) {
     throw new CustomError.badRequestError('Please provide all vlaues');
   }
-  const user = await User.findOneAndUpdate(
-    { _id: req.user.userId },
-    { email, name },
-    { new: true, runValidators: true },
-  );
+  const user = await User.findOne({ _id: req.user.userId });
+
+  user.email = email;
+  user.name = name;
+
+  await user.save();
 
   const tokenUser = createTokenUser(user);
   attachCookiesToResponse({ res, user: tokenUser });
@@ -61,3 +63,21 @@ exports.patch_updateUserPassword = asyncWrapper(async (req, res) => {
   await user.save();
   res.status(StatusCodes.OK).json({ msg: 'Succcess! Password Updated!' });
 });
+
+// update user with findOneAndUpdate
+// exports.patch_updateUser = asyncWrapper(async (req, res) => {
+//   const { email, name } = req.body;
+
+//   if (!email || !name) {
+//     throw new CustomError.badRequestError('Please provide all vlaues');
+//   }
+//   const user = await User.findOneAndUpdate(
+//     { _id: req.user.userId },
+//     { email, name },
+//     { new: true, runValidators: true },
+//   );
+
+//   const tokenUser = createTokenUser(user);
+//   attachCookiesToResponse({ res, user: tokenUser });
+//   res.status(StatusCodes.OK).json({ user: tokenUser });
+// });
