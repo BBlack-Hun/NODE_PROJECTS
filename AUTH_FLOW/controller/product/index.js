@@ -14,7 +14,7 @@ router.post(
 );
 router.get('/', ctrl.getAllProducts);
 
-router.patch(
+router.post(
   '/uploadImage',
   authenticateUser,
   authorizePermissions('admin'),

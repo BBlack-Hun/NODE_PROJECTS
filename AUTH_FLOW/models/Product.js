@@ -38,6 +38,7 @@ const ProductSchema = new mongoose.Schema(
     },
     color: {
       type: [String],
+      default: ['#222'],
       required: true,
     },
     featured: {
