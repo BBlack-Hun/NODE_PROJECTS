@@ -21,7 +21,15 @@ exports.getAllProducts = asyncWrapper(async (req, res) => {
 });
 
 exports.getSingleProduct = asyncWrapper(async (req, res) => {
-  res.send('get single Product');
+  const { id: productId } = req.params;
+
+  const product = await Product.findOne({ _id: productId });
+
+  if (!product) {
+    throw new CustomError.notFoundError(`No Product with id : ${productId}`);
+  }
+
+  res.status(StatusCodes.OK).json({ product });
 });
 
 exports.updateProduct = asyncWrapper(async (req, res) => {
