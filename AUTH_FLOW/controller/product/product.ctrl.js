@@ -15,7 +15,9 @@ exports.createProduct = asyncWrapper(async (req, res) => {
 });
 
 exports.getAllProducts = asyncWrapper(async (req, res) => {
-  res.send('get All Products');
+  const product = await Product.find({});
+
+  res.status(StatusCodes.OK).json({ product, count: product.length });
 });
 
 exports.getSingleProduct = asyncWrapper(async (req, res) => {
