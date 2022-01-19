@@ -33,7 +33,17 @@ exports.getSingleProduct = asyncWrapper(async (req, res) => {
 });
 
 exports.updateProduct = asyncWrapper(async (req, res) => {
-  res.send('update Product');
+  const { id: productId } = req.params;
+  const product = await Product.findOneAndUpdate({ _id: productId }, req.body, {
+    new: ture,
+    runValidators: true,
+  });
+
+  if (!product) {
+    throw new CustomError.notFoundError(`No Product with id : ${productId}`);
+  }
+
+  res.status(StatusCodes.OK).json({ product });
 });
 
 exports.deleteProduct = asyncWrapper(async (req, res) => {
