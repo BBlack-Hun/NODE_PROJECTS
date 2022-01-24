@@ -47,7 +47,16 @@ exports.updateProduct = asyncWrapper(async (req, res) => {
 });
 
 exports.deleteProduct = asyncWrapper(async (req, res) => {
-  res.send('delete Product');
+  const { id: productId } = req.params;
+
+  const product = await Product.findOne({ _id: productId });
+
+  if (!product) {
+    throw new CustomError.notFoundError(`No Product with id : ${productId}`);
+  }
+
+  await product.remove();
+  res.status(StatusCodes.OK).json({ msg: `Success! product removed!` });
 });
 
 exports.updateImage = asyncWrapper(async (req, res) => {
