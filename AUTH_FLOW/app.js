@@ -120,7 +120,7 @@ class app {
         customError.statusCode = 400;
       }
       if (err.code === 'LIMIT_FILE_SIZE') {
-        customError.msg = 'Please upload image smaller 1KB';
+        customError.msg = 'Please upload image smaller 1MB';
         customError.StatusCodes = 500;
       }
 

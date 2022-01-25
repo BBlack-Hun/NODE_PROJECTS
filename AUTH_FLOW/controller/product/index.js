@@ -1,6 +1,7 @@
 const { Router } = require('express');
 const router = Router();
 const ctrl = require('./product.ctrl');
+const upload = require('../../middleware/multer');
 const {
   authenticateUser,
   authorizePermissions,
@@ -18,6 +19,7 @@ router.post(
   '/uploadImage',
   authenticateUser,
   authorizePermissions('admin'),
+  upload.single('image'),
   ctrl.updateImage,
 );
 

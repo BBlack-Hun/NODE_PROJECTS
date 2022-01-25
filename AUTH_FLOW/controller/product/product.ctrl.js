@@ -1,6 +1,7 @@
 const asyncWrapper = require('../../middleware/async');
 const Product = require('../../models/Product');
 const CustomError = require('../../errors');
+const path = require('path');
 const {
   attachCookiesToResponse,
   createTokenUser,
@@ -60,5 +61,16 @@ exports.deleteProduct = asyncWrapper(async (req, res) => {
 });
 
 exports.updateImage = asyncWrapper(async (req, res) => {
-  res.send('update Product image');
+  if (!req.file) {
+    throw new CustomError.badRequestError('No File Uploaded');
+  }
+
+  const productImage = req.file ? req.file.filename : '';
+
+  const imagePath = path.join(
+    __dirname,
+    '../../public/uploads' + `${productImage}`,
+  );
+
+  res.status(StatusCodes.OK).json({ image: `/uploads/${productImage}` });
 });
