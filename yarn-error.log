@@ -1,0 +1,36 @@
+Arguments: 
+  /opt/homebrew/Cellar/node/16.1.0/bin/node /opt/homebrew/bin/yarn add add dependency
+
+PATH: 
+  /opt/homebrew/opt/icu4c/sbin:/opt/homebrew/opt/icu4c/bin:/Users/bblack_hun/.pyenv/shims:/opt/homebrew/Cellar/pyenv-virtualenv/1.1.5/shims:/Users/bblack_hun/.pyenv/bin:/opt/homebrew/bin:/usr/local/opt/openssl@1.1/bin:/usr/local/opt/m4/bin:/opt/homebrew/opt/sqlite/bin:/opt/homebrew/bin:/opt/homebrew/opt/icu4c/sbin:/opt/homebrew/opt/icu4c/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
+
+Yarn version: 
+  1.22.10
+
+Node version: 
+  16.1.0
+
+Platform: 
+  darwin arm64
+
+Trace: 
+  Error: https://registry.yarnpkg.com/add%20dependency: Not found
+      at Request.params.callback [as _callback] (/opt/homebrew/lib/node_modules/yarn/lib/cli.js:66988:18)
+      at Request.self.callback (/opt/homebrew/lib/node_modules/yarn/lib/cli.js:140662:22)
+      at Request.emit (node:events:365:28)
+      at Request.<anonymous> (/opt/homebrew/lib/node_modules/yarn/lib/cli.js:141634:10)
+      at Request.emit (node:events:365:28)
+      at IncomingMessage.<anonymous> (/opt/homebrew/lib/node_modules/yarn/lib/cli.js:141556:12)
+      at Object.onceWrapper (node:events:471:28)
+      at IncomingMessage.emit (node:events:377:35)
+      at endReadableNT (node:internal/streams/readable:1312:12)
+      at processTicksAndRejections (node:internal/process/task_queues:83:21)
+
+npm manifest: 
+  No manifest
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
