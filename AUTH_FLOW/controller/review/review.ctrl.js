@@ -31,11 +31,21 @@ exports.post_createReview = asyncWrapper(async (req, res) => {
 });
 
 exports.get_AllReviews = asyncWrapper(async (req, res) => {
-  res.send('get All review');
+  const reviews = await Review.find({});
+
+  res.status(StatusCodes.OK).json({ reviews, count: reviews.length });
 });
 
 exports.get_SingleReview = asyncWrapper(async (req, res) => {
-  res.send('get single review');
+  const { id: reviewId } = req.params;
+
+  const review = await Review.findOne({ _id: reviewId });
+
+  if (!review) {
+    throw new CustomError.notFoundError(`No review with id ${review}`);
+  }
+
+  res.status(StatusCodes.OK).json({ review });
 });
 
 exports.update_Review = asyncWrapper(async (req, res) => {
