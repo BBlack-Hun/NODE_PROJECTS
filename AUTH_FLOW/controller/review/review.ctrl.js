@@ -53,5 +53,17 @@ exports.update_Review = asyncWrapper(async (req, res) => {
 });
 
 exports.delete_Review = asyncWrapper(async (req, res) => {
-  res.send('delete review');
+  const { id: reviewId } = req.params;
+
+  const review = await Review.findOne({ _id: reviewId });
+
+  if (!review) {
+    throw new CustomError.notFoundError(`No review with id ${review}`);
+  }
+
+  checkPermissions(req.user, review.user);
+
+  await review.remove();
+
+  res.status(StatusCodes.OK).json({ msg: `Success! Review Removed` });
 });
