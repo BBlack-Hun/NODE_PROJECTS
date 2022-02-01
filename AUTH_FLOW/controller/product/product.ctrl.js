@@ -24,7 +24,7 @@ exports.getAllProducts = asyncWrapper(async (req, res) => {
 exports.getSingleProduct = asyncWrapper(async (req, res) => {
   const { id: productId } = req.params;
 
-  const product = await Product.findOne({ _id: productId });
+  const product = await Product.findOne({ _id: productId }).populate('reviews');
 
   if (!product) {
     throw new CustomError.notFoundError(`No Product with id : ${productId}`);
