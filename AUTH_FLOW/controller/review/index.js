@@ -11,5 +11,6 @@ router.get('/', authenticateUser, ctrl.get_AllReviews);
 router.get('/:id', ctrl.get_SingleReview);
 router.patch('/:id', authenticateUser, ctrl.update_Review);
 router.delete('/:id', authenticateUser, ctrl.delete_Review);
+router.get('/:id/reviews', authenticateUser, ctrl.getSingleProductReviews);
 
 module.exports = router;
