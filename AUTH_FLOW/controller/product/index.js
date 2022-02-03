@@ -37,4 +37,6 @@ router.delete(
   ctrl.deleteProduct,
 );
 
+router.get('/:id/reviews', ctrl.getSingleProductReviews);
+
 module.exports = router;
