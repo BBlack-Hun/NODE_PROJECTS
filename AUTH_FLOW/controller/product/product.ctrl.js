@@ -1,5 +1,6 @@
 const asyncWrapper = require('../../middleware/async');
 const Product = require('../../models/Product');
+const Review = require('../../models/Review');
 const CustomError = require('../../errors');
 const path = require('path');
 const {
@@ -58,6 +59,12 @@ exports.deleteProduct = asyncWrapper(async (req, res) => {
 
   await product.remove();
   res.status(StatusCodes.OK).json({ msg: `Success! product removed!` });
+});
+
+exports.getSingleProductReviews = asyncWrapper(async (req, res) => {
+  const { id: productId } = req.params;
+  const reviews = await Review.find({ product: productId });
+  res.status(StatusCodes.OK).json({ reviews, count: reviews.length });
 });
 
 exports.updateImage = asyncWrapper(async (req, res) => {
