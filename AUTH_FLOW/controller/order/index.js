@@ -7,7 +7,12 @@ const {
 } = require('../../middleware/authentication');
 
 router.post('/', authenticateUser, ctrl.post_createOrder);
-router.get('/', authenticateUser, authorizePermissions, ctrl.get_allOrders);
+router.get(
+  '/',
+  authenticateUser,
+  authorizePermissions('admin', 'user'),
+  ctrl.get_allOrders,
+);
 router.get('/showAllMyOrders', authenticateUser, ctrl.get_currentUserOrders);
 router.get('/:id', authenticateUser, ctrl.get_singleOrder);
 router.patch('/:id', authenticateUser, ctrl.patch_updateOrder);
