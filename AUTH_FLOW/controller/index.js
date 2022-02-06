@@ -3,7 +3,7 @@ const router = Router();
 // const authenticationMiddleWare = require('../middleware/auth');
 
 router.get('/v1', (req, res) => {
-  // console.log(req.cookies);
+  // console.log(req);
   console.log(req.signedCookies);
   res.send('auth-flow');
 });

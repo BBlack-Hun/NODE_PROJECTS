@@ -66,7 +66,12 @@ class app {
     this.app.use(cookieParser(process.env.JWT_SECRET));
     this.app.use(bodyParser.json());
     this.app.use(bodyParser.urlencoded({ extended: false }));
-    this.app.use(cors());
+    this.app.use(
+      cors({
+        origin: 'http://localhost:3000',
+        credentials: true,
+      }),
+    );
     this.app.use(helmet());
     this.app.use(xss());
     this.app.set('trust proxy', 1);
@@ -80,7 +85,7 @@ class app {
   }
 
   setStatic() {
-    this.app.use(express.static('./public'));
+    // this.app.use(express.static('./public'));
     // this.app.get('/', (req, res) => {
     //   res.send('e-commerce-api');
     // });
@@ -101,7 +106,7 @@ class app {
       let customError = {
         // set default
         statusCode: err.statusCode || StatusCodes.INTERNAL_SERVER_ERROR,
-        msg: err.message || 'SomeTihing went wrong try again later',
+        msg: err.message || 'SomeThing went wrong try again later',
       };
 
       console.log(err);
