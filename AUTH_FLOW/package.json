@@ -30,6 +30,7 @@
     "morgan": "^1.10.0",
     "multer": "^1.4.4",
     "nodemailer": "^6.7.2",
+    "stripe": "^8.202.0",
     "swagger-ui-express": "^4.3.0",
     "validator": "^13.6.0",
     "xss-clean": "^0.1.1",
