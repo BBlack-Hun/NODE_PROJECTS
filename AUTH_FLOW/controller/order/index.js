@@ -10,7 +10,7 @@ router.post('/', authenticateUser, ctrl.post_createOrder);
 router.get(
   '/',
   authenticateUser,
-  authorizePermissions('admin', 'user'),
+  authorizePermissions('admin'),
   ctrl.get_allOrders,
 );
 router.get('/showAllMyOrders', authenticateUser, ctrl.get_currentUserOrders);
