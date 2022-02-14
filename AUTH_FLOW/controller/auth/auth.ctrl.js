@@ -50,6 +50,11 @@ exports.post_login = asyncWrapper(async (req, res) => {
   if (!isPasswordCorrect) {
     throw new CustomError.unAuthenticatedError('Invalid Credentials');
   }
+
+  if (!user.isVerified) {
+    throw new CustomError.unAuthenticatedError('Please verify your email');
+  }
+
   const tokenUser = createTokenUser(user);
   attachCookiesToResponse({ res, user: tokenUser });
   res.status(StatusCodes.OK).json({ user: tokenUser });
