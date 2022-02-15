@@ -38,7 +38,22 @@ exports.post_register = asyncWrapper(async (req, res) => {
 exports.get_verifyEmail = asyncWrapper(async (req, res) => {
   const { verificationToken, email } = req.body;
 
-  res.status(StatusCodes.OK).json({ verificationToken, email });
+  const user = await User.findOne({ email });
+
+  if (!user) {
+    throw new CustomError.unAuthenticatedError('Verification Failed');
+  }
+
+  if (user.verificationToken !== verificationToken) {
+    throw new CustomError.unAuthenticatedError('Verification Failed');
+  }
+
+  (user.isVerified = true), (user.verified = Date.now());
+  user.verificationToken = '';
+
+  await user.save();
+
+  res.status(StatusCodes.OK).json({ msg: 'Email Verified' });
 });
 
 exports.post_login = asyncWrapper(async (req, res) => {
