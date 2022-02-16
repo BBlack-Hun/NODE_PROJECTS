@@ -4,6 +4,7 @@ const CustomError = require('../../errors');
 const asyncWrapper = require('../../middleware/async');
 const { attachCookiesToResponse, createTokenUser } = require('../../utils');
 const crypto = require('crypto');
+const sendEmail = require('../../utils');
 
 exports.post_register = asyncWrapper(async (req, res) => {
   const { email, name, password } = req.body;
@@ -31,7 +32,6 @@ exports.post_register = asyncWrapper(async (req, res) => {
   // attachCookiesToResponse({ res, user: tokenUser });
   res.status(StatusCodes.CREATED).json({
     msg: 'Success! Please check your email to verify account',
-    verificationToken: user.verificationToken,
   });
 });
 
