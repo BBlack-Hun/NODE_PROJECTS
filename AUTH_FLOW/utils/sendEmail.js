@@ -7,15 +7,15 @@ const sendEmail = asyncWrapper(async () => {
     host: 'smtp.ethereal.email',
     port: 587,
     auth: {
-      user: 'troy.gutmann61@ethereal.email',
-      pass: 'uacx5eK1Rjzr3gw2Rc',
+      user: 'arnaldo.bernier25@ethereal.email',
+      pass: 'HUa4WbTK18uhn6WkKC',
     },
   });
 
   let info = await transporter.sendMail({
     from: `"coding addict" <codingddict@gmail.com>`,
-    to: 'bar@example.com',
-    subject: 'hello',
+    to: 'user@user.com',
+    subject: 'Heloo World!',
     html: '<h2>Sending on nodejs</h2>',
   });
 });

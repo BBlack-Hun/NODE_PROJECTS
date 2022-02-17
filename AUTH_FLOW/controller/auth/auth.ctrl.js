@@ -4,7 +4,7 @@ const CustomError = require('../../errors');
 const asyncWrapper = require('../../middleware/async');
 const { attachCookiesToResponse, createTokenUser } = require('../../utils');
 const crypto = require('crypto');
-const sendEmail = require('../../utils');
+const sendEmail = require('../../utils/sendEmail');
 
 exports.post_register = asyncWrapper(async (req, res) => {
   const { email, name, password } = req.body;
@@ -27,6 +27,8 @@ exports.post_register = asyncWrapper(async (req, res) => {
     role,
     verificationToken,
   });
+
+  await sendEmail();
   // send verification token back only while testing in postman!!!
   // const tokenUser = createTokenUser(user);
   // attachCookiesToResponse({ res, user: tokenUser });
