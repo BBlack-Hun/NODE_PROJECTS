@@ -1,22 +1,16 @@
 const nodemailer = require('nodemailer');
+const nodemailerConfig = require('./nodemailerConfig');
 const asyncWrapper = require('../middleware/async');
 
-const sendEmail = asyncWrapper(async () => {
+const sendEmail = asyncWrapper(async ({ to, subject, html }) => {
   let testAccount = await nodemailer.createTestAccount();
-  const transporter = nodemailer.createTransport({
-    host: 'smtp.ethereal.email',
-    port: 587,
-    auth: {
-      user: 'arnaldo.bernier25@ethereal.email',
-      pass: 'HUa4WbTK18uhn6WkKC',
-    },
-  });
+  const transporter = nodemailer.createTransport(nodemailerConfig);
 
-  let info = await transporter.sendMail({
-    from: `"coding addict" <codingddict@gmail.com>`,
-    to: 'user@user.com',
-    subject: 'Heloo World!',
-    html: '<h2>Sending on nodejs</h2>',
+  return await transporter.sendMail({
+    from: `"king Mumnu" <wjdgns6102@gmail.com>`, // sender address
+    to,
+    subject,
+    html,
   });
 });
 
