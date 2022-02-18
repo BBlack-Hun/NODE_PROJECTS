@@ -31,7 +31,13 @@ exports.post_register = asyncWrapper(async (req, res) => {
     verificationToken,
   });
 
-  await sendEmail();
+  const origin = 'http://localhost:3000';
+  await sendVerificationEmail({
+    name: user.name,
+    email: user.email,
+    verificationToken: user.verificationToken,
+    origin,
+  });
   // send verification token back only while testing in postman!!!
   // const tokenUser = createTokenUser(user);
   // attachCookiesToResponse({ res, user: tokenUser });
