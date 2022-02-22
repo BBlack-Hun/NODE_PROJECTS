@@ -8,7 +8,7 @@ const sendVerificationEmail = asyncWrapper(
     const message = `<p>Please confirm your email by clicking on the following link : <a href=${verifyEmail}>Verify Email</a></p>`;
     return sendEmail({
       to: email,
-      subject: 'Email Con',
+      subject: 'Email Confirmation',
       html: `<h4> Hello, ${name}</h4>
       ${message}`,
     });
