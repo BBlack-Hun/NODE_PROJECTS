@@ -94,6 +94,18 @@ exports.post_login = asyncWrapper(async (req, res) => {
   // create refresh token
   let refreshToken = '';
   // check for existing token
+  const existingToken = await Token.findOne({ user: user._id });
+
+  if (existingToken) {
+    const { isValid } = existingToken;
+    if (!isValid) {
+      throw new CustomError.unAuthenticatedError('Invalid Credentials');
+    }
+    refreshToken = existingToken.refreshToken;
+    attachCookiesToResponse({ res, user: tokenUser });
+    res.status(StatusCodes.OK).json({ user: tokenUser });
+    return;
+  }
 
   refreshToken = crypto.randomBytes(40).toString('hex');
   const userAgent = req.headers['user-agent'];
