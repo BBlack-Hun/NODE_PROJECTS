@@ -7,7 +7,7 @@ const createJWT = ({ payload }) => {
 };
 
 // 리턴을 바로 시키려면,, {}로 감싸지 말것..
-const isTokenValid = ({ token }) => jwt.verify(token, process.env.JWT_SECRET);
+const isTokenValid = (token) => jwt.verify(token, process.env.JWT_SECRET);
 
 const attachCookiesToResponse = ({ res, user, refreshToken }) => {
   const accessTokenJWT = createJWT({ payload: { user } });
@@ -19,7 +19,7 @@ const attachCookiesToResponse = ({ res, user, refreshToken }) => {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     signed: true,
-    maxAge: 1000,
+    maxAge: 1000 * 60 * 15,
   });
 
   res.cookie('refreshToken', refreshTokenJWT, {
