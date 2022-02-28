@@ -131,3 +131,11 @@ exports.delete_logout = asyncWrapper(async (req, res) => {
   });
   res.status(StatusCodes.OK).json({ msg: 'user logged out!' });
 });
+
+exports.forget_Password = asyncWrapper(async (req, res) => {
+  res.send('forget password');
+});
+
+exports.reset_Password = asyncWrapper(async (req, res) => {
+  res.send('reset password');
+});
